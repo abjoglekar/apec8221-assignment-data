@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPA Renewable Energy Facility Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #003d7a;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .nav-menu {
+            background-color: #0066cc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .nav-menu table {
+            width: 100%;
+            color: white;
+        }
+        .nav-menu td {
+            padding: 8px;
+            text-align: center;
+            border-right: 1px solid white;
+        }
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-box h3 {
+            margin: 0 0 10px 0;
+            color: #0066cc;
+            font-size: 14px;
+        }
+        .stat-box .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #003d7a;
+        }
+        table.summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-bottom: 30px;
+        }
+        .summary-table th {
+            background-color: #006400;
+            color: white;
+            padding: 10px;
+        }
+        .summary-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        table.facility-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .facility-table th {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .facility-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .facility-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .facility-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        .data-quality {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        table.contact-table {
+            width: 40%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .contact-table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        .footer {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-size: 12px;
+            color: #666;
+        }
+        #database-info {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌱 EPA Renewable Energy Facility Registry</h1>
+        <p>Environmental Protection Agency - Office of Atmospheric Programs</p>
+        <p style="font-size: 12px; margin-top: 10px;">Facilities Operational 2019-2023 | Upper Midwest Region</p>
+    </div>
+
+    <!-- Navigation Menu Table (NOT the data you want!) -->
+    <div class="nav-menu">
+        <table>
+            <tr>
+                <td><a href="#" style="color: white; text-decoration: none;">Home</a></td>
+                <td><a href="#" style="color: white; text-decoration: none;">Facilities</a></td>
+                <td><a href="#" style="color: white; text-decoration: none;">Reports</a></td>
+                <td><a href="#" style="color: white; text-decoration: none;">Downloads</a></td>
+                <td><a href="#" style="color: white; text-decoration: none;">Contact</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="info-box">
+        <strong>Database Information:</strong> This registry contains renewable energy facilities that became operational between January 2019 and December 2023 in Minnesota, Wisconsin, Iowa, North Dakota, and South Dakota. Data is compiled from state regulatory filings and EPA Clean Energy reporting. Last database update: December 15, 2023.
+    </div>
+
+    <!-- Summary Statistics Boxes -->
+    <div class="summary-stats">
+        <div class="stat-box">
+            <h3>TOTAL FACILITIES</h3>
+            <div class="number">50</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Across 5 states</p>
+        </div>
+        <div class="stat-box">
+            <h3>TOTAL CAPACITY</h3>
+            <div class="number">7,234</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Megawatts (MW)</p>
+        </div>
+        <div class="stat-box">
+            <h3>LATEST UPDATE</h3>
+            <div class="number" style="font-size: 20px;">Dec 2023</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Quarterly updates</p>
+        </div>
+    </div>
+
+    <h2 style="color: #003d7a; border-bottom: 2px solid #0066cc; padding-bottom: 10px;">
+        Quick Statistics by Type
+    </h2>
+
+    <!-- Summary Table (NOT the facility details you want!) -->
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>Facility Type</th>
+                <th>Count</th>
+                <th>Total Capacity (MW)</th>
+                <th>Avg Size (MW)</th>
+                <th>% of Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Solar</strong></td>
+                <td>21</td>
+                <td>2,458</td>
+                <td>117</td>
+                <td>34%</td>
+            </tr>
+            <tr>
+                <td><strong>Wind</strong></td>
+                <td>21</td>
+                <td>4,432</td>
+                <td>211</td>
+                <td>61%</td>
+            </tr>
+            <tr>
+                <td><strong>Hydroelectric</strong></td>
+                <td>8</td>
+                <td>344</td>
+                <td>43</td>
+                <td>5%</td>
+            </tr>
+            <tr style="background-color: #e7f3ff; font-weight: bold;">
+                <td>TOTAL</td>
+                <td>50</td>
+                <td>7,234</td>
+                <td>145</td>
+                <td>100%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="data-quality">
+        <strong>⚠️ Data Quality Note:</strong> Some facility records may contain incomplete or inconsistent formatting due to variations in state reporting requirements. Coordinates are provided as reported by facility operators. Users should verify critical information with state energy offices.
+    </div>
+
+    <h2 style="color: #003d7a; border-bottom: 2px solid #0066cc; padding-bottom: 10px; margin-top: 40px;">
+        Detailed Facility Registry
+    </h2>
+
+    <div id="database-info" style="font-size: 14px; color: #666; margin-bottom: 15px;">
+        <p><strong>Filter by:</strong> 
+        <select style="padding: 5px; margin: 0 10px;">
+            <option>All Types</option>
+            <option>Solar</option>
+            <option>Wind</option>
+            <option>Hydro</option>
+        </select>
+        <select style="padding: 5px;">
+            <option>All States</option>
+            <option>Minnesota</option>
+            <option>Wisconsin</option>
+            <option>Iowa</option>
+            <option>North Dakota</option>
+            <option>South Dakota</option>
+        </select>
+        </p>
+    </div>
+
+    <!-- THIS IS THE MAIN DATA TABLE STUDENTS NEED -->
+    <table class="facility-table" id="main-facility-data">
+        <thead>
+            <tr>
+                <th>Facility Name</th>
+                <th>Type</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Coordinates</th>
+                <th>Operational Date</th>
+                <th>Owner</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Solar Facilities -->
+            <tr>
+                <td>Prairie Sun Solar Farm</td>
+                <td>Solar</td>
+                <td>150 MW</td>
+                <td>Rochester, Minnesota</td>
+                <td>43.9665°N, -92.4580°W</td>
+                <td>Operational since 2019</td>
+                <td>NextEra Energy Resources</td>
+            </tr>
+            <tr>
+                <td>Northstar Solar Array</td>
+                <td>SOLAR</td>
+                <td>85 megawatts</td>
+                <td>Duluth, MN</td>
+                <td>46.7867, -92.1005</td>
+                <td>2020</td>
+                <td>Minnesota Power</td>
+            </tr>
+            <tr>
+                <td>Lake Region Solar Project</td>
+                <td>Solar</td>
+                <td>200.5MW</td>
+                <td>Willmar,Minnesota</td>
+                <td>45.1219°N, -95.0433°W</td>
+                <td>January 2021</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Red River Valley Solar</td>
+                <td>solar</td>
+                <td>175 MW</td>
+                <td>Moorhead, Minn.</td>
+                <td>46.8738, -96.7678</td>
+                <td>June 2022</td>
+                <td>Otter Tail Power</td>
+            </tr>
+            <tr>
+                <td>Twin Cities Solar Hub</td>
+                <td>Solar</td>
+                <td>120 megawatts</td>
+                <td>St. Paul, Minnesota</td>
+                <td>44.9537°N, -93.0900°W</td>
+                <td>2019-03-15</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Goodhue County Solar</td>
+                <td>Solar</td>
+                <td>95MW</td>
+                <td>Red Wing, MN</td>
+                <td>44.5625, -92.5338</td>
+                <td>Operational 2020</td>
+                <td>Southern Minnesota Municipal Power</td>
+            </tr>
+            <tr>
+                <td>Big Stone Solar Facility</td>
+                <td>SOLAR</td>
+                <td>135.5 MW</td>
+                <td>Ortonville, Minnesota</td>
+                <td>45.3049°N, -96.4461°W</td>
+                <td>2021</td>
+                <td>Great River Energy</td>
+            </tr>
+            <tr>
+                <td>Chippewa Valley Solar Array</td>
+                <td>Solar</td>
+                <td>78 megawatts</td>
+                <td>Eau Claire, Wisconsin</td>
+                <td>44.8113, -91.4985</td>
+                <td>March 2022</td>
+                <td>Dairyland Power Cooperative</td>
+            </tr>
+            <tr>
+                <td>Green Bay Solar Park</td>
+                <td>solar</td>
+                <td>110MW</td>
+                <td>Green Bay, WI</td>
+                <td>44.5133°N, -88.0133°W</td>
+                <td>2023</td>
+                <td>Wisconsin Public Service</td>
+            </tr>
+            <tr>
+                <td>Madison Clean Energy</td>
+                <td>Solar</td>
+                <td>92 MW</td>
+                <td>Madison, Wisconsin</td>
+                <td>43.0731, -89.4012</td>
+                <td>Operational since 2020</td>
+                <td>Madison Gas & Electric</td>
+            </tr>
+            <tr>
+                <td>Iowa Corn Belt Solar</td>
+                <td>SOLAR</td>
+                <td>165 megawatts</td>
+                <td>Des Moines, Iowa</td>
+                <td>41.5868°N, -93.6250°W</td>
+                <td>2019</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Cedar Rapids Solar Center</td>
+                <td>Solar</td>
+                <td>88.5MW</td>
+                <td>Cedar Rapids, IA</td>
+                <td>41.9779, -91.6656</td>
+                <td>January 2021</td>
+                <td>Alliant Energy</td>
+            </tr>
+            <tr>
+                <td>Dubuque Solar Initiative</td>
+                <td>solar</td>
+                <td>72 MW</td>
+                <td>Dubuque,Iowa</td>
+                <td>42.5006, -90.6648</td>
+                <td>2022</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            
+            <!-- Wind Facilities -->
+            <tr>
+                <td>Prairie Wind Energy Center</td>
+                <td>Wind</td>
+                <td>300 MW</td>
+                <td>Marshall, Minnesota</td>
+                <td>44.4469°N, -95.7884°W</td>
+                <td>2019</td>
+                <td>NextEra Energy Resources</td>
+            </tr>
+            <tr>
+                <td>Buffalo Ridge Wind Farm III</td>
+                <td>WIND</td>
+                <td>250 megawatts</td>
+                <td>Lake Benton, MN</td>
+                <td>44.2577, -96.2806</td>
+                <td>Operational since 2020</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Lakefield Wind Project</td>
+                <td>Wind</td>
+                <td>200.5 MW</td>
+                <td>Lakefield, Minnesota</td>
+                <td>43.6730, -95.1744</td>
+                <td>June 2021</td>
+                <td>Great River Energy</td>
+            </tr>
+            <tr>
+                <td>North Star Wind</td>
+                <td>wind</td>
+                <td>175MW</td>
+                <td>Grand Forks, North Dakota</td>
+                <td>47.9253°N, -97.0329°W</td>
+                <td>2019-09-01</td>
+                <td>Otter Tail Power</td>
+            </tr>
+            <tr>
+                <td>Dakota Prairie Wind Farm</td>
+                <td>Wind</td>
+                <td>325 megawatts</td>
+                <td>Fargo, ND</td>
+                <td>46.8772, -96.7898</td>
+                <td>2020</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Minot Wind Energy</td>
+                <td>WIND</td>
+                <td>195 MW</td>
+                <td>Minot, North Dakota</td>
+                <td>48.2330, -101.2963</td>
+                <td>Operational 2022</td>
+                <td>Basin Electric Power Cooperative</td>
+            </tr>
+            <tr>
+                <td>Sioux Falls Wind</td>
+                <td>Wind</td>
+                <td>280.5MW</td>
+                <td>Sioux Falls, South Dakota</td>
+                <td>43.5460°N, -96.7313°W</td>
+                <td>2021</td>
+                <td>Otter Tail Power</td>
+            </tr>
+            <tr>
+                <td>Black Hills Wind Farm</td>
+                <td>wind</td>
+                <td>220 megawatts</td>
+                <td>Rapid City, SD</td>
+                <td>44.0805, -103.2310</td>
+                <td>March 2022</td>
+                <td>Black Hills Energy</td>
+            </tr>
+            <tr>
+                <td>Aberdeen Wind Project</td>
+                <td>Wind</td>
+                <td>165 MW</td>
+                <td>Aberdeen, South Dakota</td>
+                <td>45.4647, -98.4865</td>
+                <td>2023</td>
+                <td>Northwestern Energy</td>
+            </tr>
+            <tr>
+                <td>La Crosse Wind Energy</td>
+                <td>WIND</td>
+                <td>145MW</td>
+                <td>La Crosse, Wisconsin</td>
+                <td>43.8014°N, -91.2396°W</td>
+                <td>Operational since 2020</td>
+                <td>Dairyland Power Cooperative</td>
+            </tr>
+            <tr>
+                <td>Fond du Lac Wind</td>
+                <td>Wind</td>
+                <td>188.5 megawatts</td>
+                <td>Fond du Lac, WI</td>
+                <td>43.7730, -88.4470</td>
+                <td>2021</td>
+                <td>We Energies</td>
+            </tr>
+            <tr>
+                <td>Cedar County Wind Farm</td>
+                <td>wind</td>
+                <td>210 MW</td>
+                <td>Tipton, Iowa</td>
+                <td>41.7669, -91.1279</td>
+                <td>January 2020</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Palo Alto Wind Project</td>
+                <td>Wind</td>
+                <td>235.5MW</td>
+                <td>Emmetsburg, IA</td>
+                <td>43.1125, -94.6819</td>
+                <td>2022</td>
+                <td>Alliant Energy</td>
+            </tr>
+            
+            <!-- Hydroelectric Facilities -->
+            <tr>
+                <td>Mississippi River Hydro Station</td>
+                <td>Hydro</td>
+                <td>45 MW</td>
+                <td>Minneapolis, Minnesota</td>
+                <td>44.9778°N, -93.2650°W</td>
+                <td>Upgraded 2019</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>St. Croix Falls Hydroelectric</td>
+                <td>HYDRO</td>
+                <td>38.5 megawatts</td>
+                <td>St. Croix Falls, WI</td>
+                <td>45.4102, -92.6410</td>
+                <td>2020</td>
+                <td>Northern States Power</td>
+            </tr>
+            <tr>
+                <td>Red Wing Dam Project</td>
+                <td>Hydro</td>
+                <td>52MW</td>
+                <td>Red Wing, Minnesota</td>
+                <td>44.5625, -92.5338</td>
+                <td>Operational 2021</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Winona Hydroelectric Plant</td>
+                <td>hydro</td>
+                <td>35 megawatts</td>
+                <td>Winona, MN</td>
+                <td>44.0499°N, -91.6393°W</td>
+                <td>2019-11-01</td>
+                <td>Dairyland Power Cooperative</td>
+            </tr>
+            <tr>
+                <td>Alma Dam Facility</td>
+                <td>Hydro</td>
+                <td>42.5 MW</td>
+                <td>Alma, Wisconsin</td>
+                <td>44.3275, -91.9187</td>
+                <td>2022</td>
+                <td>Dairyland Power Cooperative</td>
+            </tr>
+            <tr>
+                <td>Prairie du Chien Hydro</td>
+                <td>HYDRO</td>
+                <td>48MW</td>
+                <td>Prairie du Chien, WI</td>
+                <td>43.0516, -91.1413</td>
+                <td>Operational since 2020</td>
+                <td>Alliant Energy</td>
+            </tr>
+            <tr>
+                <td>Dubuque Lock & Dam Hydro</td>
+                <td>Hydro</td>
+                <td>31.5 megawatts</td>
+                <td>Dubuque, Iowa</td>
+                <td>42.5006, -90.6648</td>
+                <td>2021</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Keokuk Dam Upgrade</td>
+                <td>hydro</td>
+                <td>55 MW</td>
+                <td>Keokuk, IA</td>
+                <td>40.3974°N, -91.3876°W</td>
+                <td>March 2023</td>
+                <td>Ameren</td>
+            </tr>
+            
+            <!-- More mixed facilities -->
+            <tr>
+                <td>Worthington Solar</td>
+                <td>Solar</td>
+                <td>98megawatts</td>
+                <td>Worthington, Minnesota</td>
+                <td>43.6199, -95.5964</td>
+                <td>2020</td>
+                <td>Great River Energy</td>
+            </tr>
+            <tr>
+                <td>Blue Earth Wind Farm</td>
+                <td>Wind</td>
+                <td>192 MW</td>
+                <td>Blue Earth,MN</td>
+                <td>43.6380°N, -94.1016°W</td>
+                <td>Operational 2019</td>
+                <td>Xcel Energy</td>
+            </tr>
+            <tr>
+                <td>Austin Solar Park</td>
+                <td>SOLAR</td>
+                <td>72.5 megawatts</td>
+                <td>Austin, Minnesota</td>
+                <td>43.6666, -92.9746</td>
+                <td>2022-06-15</td>
+                <td>Southern Minnesota Municipal Power</td>
+            </tr>
+            <tr>
+                <td>Mankato Wind Energy</td>
+                <td>wind</td>
+                <td>156MW</td>
+                <td>Mankato,MN</td>
+                <td>44.1636, -94.0000</td>
+                <td>2021</td>
+                <td>Minnesota Power</td>
+            </tr>
+            <tr>
+                <td>Owatonna Solar Array</td>
+                <td>Solar</td>
+                <td>  65 MW  </td>
+                <td>Owatonna, Minnesota</td>
+                <td>44.0838°N, -93.2260°W</td>
+                <td>2023</td>
+                <td>Owatonna Public Utilities</td>
+            </tr>
+            <tr>
+                <td>Appleton Wind Project</td>
+                <td>Wind</td>
+                <td>178.5 megawatts</td>
+                <td>Appleton, WI</td>
+                <td>44.2619, -88.4154</td>
+                <td>Operational since 2020</td>
+                <td>We Energies</td>
+            </tr>
+            <tr>
+                <td>Wausau Solar Farm</td>
+                <td>solar</td>
+                <td>83MW</td>
+                <td>Wausau, Wisconsin</td>
+                <td>44.9591, -89.6301</td>
+                <td>2021</td>
+                <td>Wisconsin Public Service</td>
+            </tr>
+            <tr>
+                <td>Oshkosh Wind</td>
+                <td>WIND</td>
+                <td>142 MW</td>
+                <td>Oshkosh,WI</td>
+                <td>44.0247°N, -88.5426°W</td>
+                <td>March 2022</td>
+                <td>Wisconsin Power & Light</td>
+            </tr>
+            <tr>
+                <td>Marshalltown Wind Farm</td>
+                <td>Wind</td>
+                <td>215megawatts</td>
+                <td>Marshalltown, Iowa</td>
+                <td>42.0497, -92.9081</td>
+                <td>2019</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Ames Solar Center</td>
+                <td>Solar</td>
+                <td>94.5 MW</td>
+                <td>Ames, IA</td>
+                <td>42.0348°N, -93.6200°W</td>
+                <td>Operational 2020</td>
+                <td>Alliant Energy</td>
+            </tr>
+            <tr>
+                <td>Davenport Wind Energy</td>
+                <td>wind</td>
+                <td>168MW</td>
+                <td>Davenport, Iowa</td>
+                <td>41.5236, -90.5776</td>
+                <td>2022</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Waterloo Solar Project</td>
+                <td>SOLAR</td>
+                <td>76 megawatts</td>
+                <td>Waterloo,IA</td>
+                <td>42.4928, -92.3426</td>
+                <td>2023</td>
+                <td>Alliant Energy</td>
+            </tr>
+            <tr>
+                <td>Bismarck Wind Farm</td>
+                <td>Wind</td>
+                <td>198.5MW</td>
+                <td>Bismarck, North Dakota</td>
+                <td>46.8083°N, -100.7837°W</td>
+                <td>Operational since 2021</td>
+                <td>Montana-Dakota Utilities</td>
+            </tr>
+            <tr>
+                <td>Pierre Solar Array</td>
+                <td>solar</td>
+                <td>62 MW</td>
+                <td>Pierre, SD</td>
+                <td>44.3683, -100.3512</td>
+                <td>2020</td>
+                <td>Northwestern Energy</td>
+            </tr>
+            <tr>
+                <td>Mitchell Wind Project</td>
+                <td>Wind</td>
+                <td>187 megawatts</td>
+                <td>Mitchell, South Dakota</td>
+                <td>43.7094, -98.0298</td>
+                <td>2022</td>
+                <td>Otter Tail Power</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 style="color: #003d7a; margin-top: 40px;">Regional Contact Information</h3>
+    
+    <!-- Another table that's NOT the facility data -->
+    <table class="contact-table">
+        <tr>
+            <td><strong>Minnesota</strong></td>
+            <td>EPA Region 5 - Chicago Office</td>
+        </tr>
+        <tr>
+            <td><strong>Wisconsin</strong></td>
+            <td>EPA Region 5 - Chicago Office</td>
+        </tr>
+        <tr>
+            <td><strong>Iowa</strong></td>
+            <td>EPA Region 7 - Kansas City Office</td>
+        </tr>
+        <tr>
+            <td><strong>North Dakota</strong></td>
+            <td>EPA Region 8 - Denver Office</td>
+        </tr>
+        <tr>
+            <td><strong>South Dakota</strong></td>
+            <td>EPA Region 8 - Denver Office</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <p><strong>Data Notes:</strong> Facility capacity represents nameplate capacity in megawatts (MW). Coordinates are provided in decimal degrees using WGS84 datum. Operational dates reflect the year facilities began commercial operation or major upgrades. This database is maintained by the EPA Office of Atmospheric Programs in coordination with state energy offices.</p>
+        <p><strong>Disclaimer:</strong> The EPA makes no warranties, expressed or implied, concerning the accuracy, completeness, reliability, or suitability of this data. The information is provided "as is" and users are responsible for verifying critical information with original sources.</p>
+        <p><strong>Last Updated:</strong> December 15, 2023 | <strong>Record Count:</strong> 50 facilities | <strong>Database Version:</strong> 2.1.4</p>
+        <p><em>For questions about this data, contact: renewable.energy@epa.gov | Phone: 1-800-EPA-RENEW</em></p>
+        <p style="margin-top: 15px; font-size: 11px;">
+            <strong>Related Resources:</strong> 
+            <a href="#">Download Full Dataset (CSV)</a> | 
+            <a href="#">View Interactive Map</a> | 
+            <a href="#">Technical Documentation</a> | 
+            <a href="#">Submit Facility Update</a>
+        </p>
+    </div>
+
+</body>
+</html>
