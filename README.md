@@ -8,7 +8,7 @@ The main project page is hosted here: **[https://abjoglekar.github.io/apec8221-a
 
 ## Assignment 4 Files
 
-Use the links in the table below to go directly to each assignemnt 4 file.
+Use the links in the table below to go directly to each assignment 4 file.
 
 | Part                | Description                                | Direct Link                                                                                                 |
 | ------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
