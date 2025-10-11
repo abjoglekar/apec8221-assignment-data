@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EPA Solar Facilities Database</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 1300px; 
+            margin: 20px auto; 
+            padding: 0 20px; 
+            background: linear-gradient(to bottom, #fff9e6 0%, #ffffff 100%);
+        }
+        .banner {
+            background: linear-gradient(135deg, #ff9900 0%, #ffb347 100%);
+            color: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .banner h1 {
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .breadcrumb {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .quick-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            box-shadow: 0 2px 8px rgba(255, 153, 0, 0.2);
+            border-top: 4px solid #ff9900;
+        }
+        .stat-card h3 {
+            color: #ff9900;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+        .info-panel {
+            background-color: #fffbf0;
+            border: 2px dashed #ffb347;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+        .filter-section {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* Navigation tabs (not the data table!) */
+        .tab-navigation {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 0;
+            border-bottom: 3px solid #ff9900;
+        }
+        .tab-navigation div {
+            background-color: #f5f5f5;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            font-weight: 500;
+        }
+        .tab-navigation div.active {
+            background-color: #ff9900;
+            color: white;
+        }
+        /* Summary grid table (NOT the facility details!) */
+        table.overview-grid {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .overview-grid th {
+            background: linear-gradient(to bottom, #ff9900, #ff8800);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .overview-grid td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .overview-grid tr:hover {
+            background-color: #fffbf0;
+        }
+        /* Main data table - THIS is what students want */
+        table.solar-data {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .solar-data thead tr:first-child th {
+            background: linear-gradient(135deg, #ff9900 0%, #ffb347 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .solar-data thead tr:first-child th:last-child {
+            border-right: none;
+        }
+        .solar-data td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            border-right: 1px solid #f9f9f9;
+        }
+        .solar-data td:last-child {
+            border-right: none;
+        }
+        .solar-data tbody tr:nth-child(even) {
+            background-color: #fffbf0;
+        }
+        .solar-data tbody tr:hover {
+            background-color: #fff4d6;
+            transition: background-color 0.2s;
+        }
+        /* Legend table at bottom */
+        table.legend {
+            width: 50%;
+            margin: 20px 0;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+        .legend td {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+        }
+        .legend td:first-child {
+            font-weight: bold;
+            background-color: #f5f5f5;
+            width: 30%;
+        }
+        .section-header {
+            background-color: #ff9900;
+            color: white;
+            padding: 12px 20px;
+            margin: 30px 0 15px 0;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>☀️ Solar Energy Facilities Registry</h1>
+        <p style="margin: 10px 0 0 0; font-size: 16px;">Photovoltaic & Concentrated Solar Power Systems | 2019-2023</p>
+        <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">United States Environmental Protection Agency - Renewable Energy Division</p>
+    </div>
+
+    <div class="breadcrumb">
+        🏠 Home &gt; Renewable Energy &gt; Facility Databases &gt; <strong>Solar Facilities</strong>
+    </div>
+
+    <div class="quick-stats">
+        <div class="stat-card">
+            <h3>TOTAL PROJECTS</h3>
+            <div class="value">8</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Operational</p>
+        </div>
+        <div class="stat-card">
+            <h3>COMBINED CAPACITY</h3>
+            <div class="value">1,256</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Megawatts</p>
+        </div>
+        <div class="stat-card">
+            <h3>AVERAGE SIZE</h3>
+            <div class="value">157</div>
+            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">MW per facility</p>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <strong>📋 Database Scope:</strong> This specialized registry contains utility-scale photovoltaic (PV) and concentrated solar power (CSP) facilities that achieved commercial operation between 2019-2023 in the Upper Midwest states. Data sourced from EPA Clean Energy Partnerships, state public utility commissions, and FERC Form 1 filings. Capacity figures represent DC nameplate ratings as reported by facility operators.
+    </div>
+
+    <div class="tab-navigation">
+        <div class="active">All Solar Facilities</div>
+        <div>By State</div>
+        <div>By Technology</div>
+        <div>By Capacity</div>
+        <div>Export Data</div>
+    </div>
+
+    <div class="filter-section">
+        <strong>🔍 Filter Options:</strong> 
+        <select style="padding: 6px 12px; margin: 0 10px; border: 1px solid #ddd; border-radius: 4px;">
+            <option>All States</option>
+            <option>Minnesota</option>
+            <option>Wisconsin</option>
+            <option>Iowa</option>
+            <option>North Dakota</option>
+            <option>South Dakota</option>
+        </select>
+        <select style="padding: 6px 12px; margin: 0 10px; border: 1px solid #ddd; border-radius: 4px;">
+            <option>All Technologies</option>
+            <option>Photovoltaic (PV)</option>
+            <option>Concentrated Solar (CSP)</option>
+        </select>
+        <button style="padding: 6px 20px; background-color: #ff9900; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply Filters</button>
+    </div>
+
+    <div class="section-header">
+        📊 Technology Type Distribution
+    </div>
+
+    <!-- Overview table - NOT the detailed facility data -->
+    <table class="overview-grid">
+        <thead>
+            <tr>
+                <th>Technology</th>
+                <th>Number of Sites</th>
+                <th>Total MW</th>
+                <th>Percentage</th>
+                <th>Avg. Capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Photovoltaic (PV)</strong></td>
+                <td>7</td>
+                <td>1,141 MW</td>
+                <td>90.8%</td>
+                <td>163 MW</td>
+            </tr>
+            <tr>
+                <td><strong>Concentrated Solar (CSP)</strong></td>
+                <td>1</td>
+                <td>115 MW</td>
+                <td>9.2%</td>
+                <td>115 MW</td>
+            </tr>
+            <tr style="background-color: #fffbf0; font-weight: bold;">
+                <td>TOTAL SOLAR</td>
+                <td>8</td>
+                <td>1,256 MW</td>
+                <td>100%</td>
+                <td>157 MW</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-header">
+        🔆 Detailed Facility Registry - Solar Projects
+    </div>
+
+    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
+        <em>Click column headers to sort. All capacity values in megawatts (MW) DC. Hover over rows for additional details.</em>
+    </p>
+
+    <!-- THIS IS THE MAIN DATA TABLE STUDENTS SHOULD SCRAPE -->
+    <table class="solar-data" id="solar-facilities-detailed">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Technology</th>
+                <th>Generation Capacity</th>
+                <th>City/State</th>
+                <th>GPS Location</th>
+                <th>Year Online</th>
+                <th>Operator</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sunrise Solar Initiative</td>
+                <td>Photovoltaic</td>
+                <td>225 MW</td>
+                <td>Windom, Minnesota</td>
+                <td>43.8663°N, 95.1186°W</td>
+                <td>2020</td>
+                <td>NextEra Energy</td>
+            </tr>
+            <tr>
+                <td>Golden Prairie PV</td>
+                <td>Photovoltaic</td>
+                <td>189.5megawatts</td>
+                <td>Fairmont,MN</td>
+                <td>43.6521, -94.4608</td>
+                <td>Operational 2021</td>
+                <td>Great River Energy</td>
+            </tr>
+            <tr>
+                <td>Badger State Solar Park</td>
+                <td>PV</td>
+                <td>156 MW</td>
+                <td>Janesville, Wisconsin</td>
+                <td>42.6828°N, -89.0187°W</td>
+                <td>2022</td>
+                <td>Alliant Energy</td>
+            </tr>
+            <tr>
+                <td>Hawkeye Solar Array</td>
+                <td>Photovoltaic</td>
+                <td>198megawatts</td>
+                <td>Iowa City, Iowa</td>
+                <td>41.6611, -91.5302</td>
+                <td>2019</td>
+                <td>MidAmerican Energy</td>
+            </tr>
+            <tr>
+                <td>Northern Lights Solar</td>
+                <td>PV</td>
+                <td>142.5 MW</td>
+                <td>Grand Forks,ND</td>
+                <td>47.9253, -97.0329</td>
+                <td>2023</td>
+                <td>Otter Tail Power</td>
+            </tr>
+            <tr>
+                <td>Mount Rushmore Solar</td>
+                <td>Photovoltaic</td>
+                <td>  115 MW  </td>
+                <td>Rapid City, South Dakota</td>
+                <td>44.0805°N, -103.2310°W</td>
+                <td>Operational since 2021</td>
+                <td>Black Hills Energy</td>
+            </tr>
+            <tr>
+                <td>Brainerd Solar Center</td>
+                <td>PV</td>
+                <td>98MW</td>
+                <td>Brainerd, Minnesota</td>
+                <td>46.3580, -94.2008</td>
+                <td>2020</td>
+                <td>Minnesota Power</td>
+            </tr>
+            <tr>
+                <td>River Falls Solar</td>
+                <td>Photovoltaic</td>
+                <td>132 megawatts</td>
+                <td>River Falls,WI</td>
+                <td>44.8614, -92.6238</td>
+                <td>2022</td>
+                <td>Xcel Energy</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-header" style="font-size: 16px; margin-top: 40px;">
+        📖 Data Field Definitions
+    </div>
+
+    <table class="legend">
+        <tr>
+            <td><strong>Project Name</strong></td>
+            <td>Official facility designation as registered with state PUC</td>
+        </tr>
+        <tr>
+            <td><strong>Technology</strong></td>
+            <td>PV = Photovoltaic panels; CSP = Concentrated Solar Power</td>
+        </tr>
+        <tr>
+            <td><strong>Capacity</strong></td>
+            <td>DC nameplate rating in megawatts (MW)</td>
+        </tr>
+        <tr>
+            <td><strong>GPS Location</strong></td>
+            <td>Approximate facility centroid in WGS84 decimal degrees</td>
+        </tr>
+        <tr>
+            <td><strong>Year Online</strong></td>
+            <td>Year of commercial operation or substantial completion</td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 6px; font-size: 13px; color: #666;">
+        <p><strong>Data Quality Notes:</strong></p>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+            <li>Capacity figures represent DC nameplate rating and may differ from AC output capacity</li>
+            <li>GPS coordinates are approximate facility centroids; large solar farms may span multiple parcels</li>
+            <li>Operational dates reflect commercial operation date (COD) as reported to state regulators</li>
+            <li>Technology classifications follow EPA Renewable Energy Certificate (REC) standards</li>
+        </ul>
+        <p style="margin-top: 15px;"><strong>Last Database Update:</strong> December 20, 2023 | <strong>Version:</strong> 3.2.1</p>
+        <p><em>For corrections or additions, contact: solar.database@epa.gov</em></p>
+    </div>
+    
+    <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+    <div style="background-color: #fff3cd; padding: 20px; border-left: 5px solid #ffc107; font-size: 13px; line-height: 1.7; border-radius: 4px;">
+        <strong>⚠️ EDUCATIONAL USE NOTICE:</strong> This webpage and all data contained herein are <strong>simulated and fictional</strong>, created by Claude AI (Anthropic) for educational purposes as part of APEC 8221: Programming for Econometrics coursework at the University of Minnesota. While designed to be realistic in structure and format, the facilities, locations, capacity values, ownership information, and other details are <strong>not real</strong> and should not be used for any purpose other than learning web scraping and data analysis techniques. No actual EPA database, solar facility records, or government information is represented here. This is a teaching tool only.
+    </div>
+</body>
+</html>
