@@ -2,514 +2,538 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EPA Hydroelectric Facilities Registry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💧 Hydroelectric Power Facilities Registry</title>
     <style>
-        * {
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f9fc;
+            color: #212529;
+            line-height: 1.6;
         }
-        body { 
-            font-family: Georgia, 'Times New Roman', serif; 
-            max-width: 1350px; 
-            margin: 0 auto; 
-            padding: 25px; 
-            background: linear-gradient(135deg, #e6f7ff 0%, #ffffff 100%);
-        }
-        .page-header {
-            background: linear-gradient(to bottom right, #1a5490, #2a7bb3);
+        .header {
+            background: linear-gradient(135deg, #0277bd 0%, #01579b 100%);
             color: white;
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .page-header::before {
-            content: '≋≋≋≋≋';
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 60px;
-            opacity: 0.1;
-        }
-        .page-header h1 {
-            margin: 0 0 10px 0;
-            font-size: 34px;
-            font-weight: normal;
-            letter-spacing: 2px;
-        }
-        .page-header .subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            font-style: italic;
-        }
-        .intro-box {
-            background-color: #e6f7ff;
-            border: 2px solid #2a7bb3;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.7;
-        }
-        .intro-box h3 {
-            margin: 0 0 12px 0;
-            color: #1a5490;
-            font-size: 18px;
-        }
-        /* Quick links table at top */
-        table.quick-links {
-            width: 100%;
-            margin-bottom: 25px;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .quick-links td {
-            padding: 15px;
-            text-align: center;
-            border-right: 2px solid #e0e0e0;
-            font-size: 14px;
-            color: #1a5490;
+        .header h1 { 
+            font-size: 36px; 
+            margin-bottom: 12px;
             font-weight: 600;
         }
-        .quick-links td:last-child {
-            border-right: none;
+        .header .subtitle { 
+            font-size: 15px; 
+            opacity: 0.95; 
+            line-height: 1.6;
         }
-        .quick-links td:hover {
-            background-color: #e6f7ff;
-            cursor: pointer;
+        .info-banner {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-left: 4px solid #1976d2;
+            padding: 24px;
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.8;
         }
-        .statistics-grid {
+        .info-banner strong { color: #01579b; }
+        .coverage-info {
+            background: white;
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #0d47a1;
+            border-bottom: 2px solid #1976d2;
+        }
+        .nav-bar {
+            background-color: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
             display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
             flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .nav-link {
+            color: #0277bd;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .nav-link:hover { 
+            background-color: #e3f2fd;
+            text-decoration: none;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+        
+        /* Stat Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
         .stat-card {
-            flex: 1;
-            min-width: 200px;
             background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 3px 12px rgba(26,84,144,0.15);
-            border-top: 5px solid #2a7bb3;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(1,87,155,0.08);
+            border-top: 4px solid #0277bd;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .stat-card h4 {
-            margin: 0 0 10px 0;
-            color: #1a5490;
-            font-size: 13px;
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(1,87,155,0.12);
+        }
+        .stat-label {
+            font-size: 11px;
             text-transform: uppercase;
+            color: #0277bd;
+            margin-bottom: 12px;
+            font-weight: 700;
             letter-spacing: 1px;
         }
-        .stat-card .value {
-            font-size: 38px;
-            font-weight: bold;
-            color: #2a7bb3;
-            margin-bottom: 5px;
+        .stat-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #01579b;
+            line-height: 1;
+            margin-bottom: 8px;
         }
-        .stat-card .description {
-            font-size: 12px;
-            color: #666;
+        .stat-unit {
+            font-size: 14px;
+            color: #607d8b;
+            font-weight: 500;
         }
-        .content-section {
+        
+        .table-container {
             background: white;
-            padding: 35px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+            overflow-x: auto;
         }
-        h2.section-heading {
-            color: #1a5490;
-            font-size: 26px;
-            margin: 0 0 20px 0;
-            padding-bottom: 12px;
-            border-bottom: 4px double #2a7bb3;
-            font-weight: normal;
-        }
-        /* Project types breakdown table */
-        table.type-breakdown {
-            width: 60%;
-            margin: 25px auto;
-            border-collapse: collapse;
-            background: white;
-        }
-        .type-breakdown thead {
-            background: linear-gradient(to bottom, #1a5490, #2a7bb3);
-            color: white;
-        }
-        .type-breakdown th {
-            padding: 14px;
-            text-align: left;
+        .table-container h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #01579b;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-note {
             font-size: 13px;
+            color: #607d8b;
+            margin-bottom: 16px;
+            font-style: italic;
         }
-        .type-breakdown td {
-            padding: 12px 14px;
-            border: 1px solid #e0e0e0;
-        }
-        .type-breakdown tr:hover {
-            background-color: #f0f8ff;
-        }
-        /* River systems table */
-        table.river-systems {
+        table {
             width: 100%;
-            margin: 20px 0;
             border-collapse: collapse;
+            font-size: 14px;
+            min-width: 900px;
         }
-        .river-systems th {
-            background-color: #2a7bb3;
+        th {
+            background-color: #01579b;
             color: white;
-            padding: 12px;
-            text-align: left;
-            font-size: 13px;
-        }
-        .river-systems td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #ddd;
-            font-size: 13px;
-        }
-        .river-systems tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        /* Main hydroelectric facilities table - THIS IS THE TARGET */
-        table.hydro-registry {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .hydro-registry thead {
-            background: linear-gradient(to right, #1a5490, #2a7bb3, #1a5490);
-        }
-        .hydro-registry th {
-            color: white;
-            padding: 18px 15px;
+            padding: 14px 16px;
             text-align: left;
             font-weight: 600;
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-right: 1px solid rgba(255,255,255,0.2);
         }
-        .hydro-registry th:last-child {
-            border-right: none;
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
         }
-        .hydro-registry tbody td {
-            padding: 15px;
-            border-bottom: 1px solid #e6f7ff;
-            border-right: 1px solid #f5f5f5;
-            font-size: 13px;
-            line-height: 1.5;
+        tr:hover { background-color: #e3f2fd; }
+        tr:nth-child(even) { background-color: #f8fbfd; }
+        
+        .watershed-table {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
-        .hydro-registry tbody td:last-child {
-            border-right: none;
-        }
-        .hydro-registry tbody tr:nth-child(odd) {
-            background-color: white;
-        }
-        .hydro-registry tbody tr:nth-child(even) {
-            background-color: #f0f8ff;
-        }
-        .hydro-registry tbody tr:hover {
-            background-color: #e6f7ff;
-            box-shadow: inset 0 0 0 2px #2a7bb3;
-            transition: all 0.2s ease;
-        }
-        .notice-box {
-            background: linear-gradient(to right, #fff9e6, #ffffff);
-            border-left: 6px solid #ff9900;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 6px;
-            font-size: 13px;
-        }
-        .data-notes {
-            background-color: #f8f9fa;
-            padding: 25px;
-            margin-top: 30px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #444;
-            line-height: 1.8;
-        }
-        .data-notes h4 {
-            margin: 0 0 15px 0;
-            color: #1a5490;
-            font-size: 16px;
-        }
-        .data-notes ul {
-            margin: 10px 0;
-            padding-left: 30px;
-        }
-        .data-notes li {
-            margin-bottom: 8px;
-        }
-        .glossary-table {
-            width: 100%;
-            margin: 20px 0;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-        .glossary-table th {
-            background-color: #e6f7ff;
-            padding: 10px;
-            text-align: left;
+        .watershed-table h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #01579b;
             font-weight: 600;
-            border: 1px solid #ccc;
         }
-        .glossary-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
+        
+        .legend-box {
+            background: #fff9c4;
+            border: 1px solid #fbc02d;
+            border-left: 4px solid #f57f17;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            line-height: 1.7;
         }
-        .glossary-table tr:hover {
-            background-color: #f0f8ff;
+        .legend-box strong { color: #e65100; }
+        
+        /* Technical Notes Section */
+        .tech-notes {
+            background: #e8f5e9;
+            border: 1px solid #81c784;
+            border-left: 4px solid #388e3c;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 30px;
+        }
+        .tech-notes h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #1b5e20;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tech-notes ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        .tech-notes li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .tech-notes strong {
+            color: #2e7d32;
+        }
+        .tech-notes p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        
+        .definitions {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+        }
+        .definitions h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #01579b;
+            font-weight: 600;
+        }
+        .def-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .def-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        .def-table td:first-child {
+            font-weight: 600;
+            color: #0277bd;
+            width: 200px;
+        }
+        
+        .resources {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+        }
+        .resources h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #01579b;
+            font-weight: 600;
+        }
+        .resource-link {
+            display: inline-block;
+            margin-right: 24px;
+            margin-bottom: 10px;
+            color: #0277bd;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .resource-link:hover { 
+            text-decoration: underline;
+            color: #01579b;
+        }
+        
+        .footer {
+            background-color: #263238;
+            color: #b0bec5;
+            padding: 28px 20px;
+            margin-top: 50px;
+            font-size: 13px;
+        }
+        .footer-content { max-width: 1400px; margin: 0 auto; }
+        .footer strong { color: #e3f2fd; }
+        
+        .disclaimer {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-left: 4px solid #ff6f00;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #856404;
+        }
+        .disclaimer strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #e65100;
         }
     </style>
 </head>
 <body>
-    <div class="page-header">
+    <div class="header">
         <h1>💧 Hydroelectric Power Facilities Registry</h1>
         <p class="subtitle">Run-of-River, Reservoir, and Pumped Storage Installations | EPA Clean Energy Database</p>
-        <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.85;">
-            Upper Midwest Hydroelectric Infrastructure | Upgraded & New Installations 2019-2023
-        </p>
+        <p class="subtitle">Upper Midwest Hydroelectric Infrastructure</p>
     </div>
 
-    <div class="intro-box">
-        <h3>📖 About This Registry</h3>
-        <p>This database catalogs hydroelectric generating facilities in the Upper Midwest region that underwent substantial upgrades, capacity additions, or new construction between 2019 and 2023. The registry includes run-of-river installations, reservoir-based generation, and pumped storage facilities with generating capacity ≥5 MW. Data is compiled from FERC licensing records, Army Corps of Engineers dam safety inspections, state water resources departments, and utility operator reports.</p>
-        <p style="margin: 12px 0 0 0;"><strong>Coverage Area:</strong> Minnesota, Wisconsin, Iowa, North Dakota, and South Dakota | <strong>Facility Count:</strong> 8 installations | <strong>Combined Capacity:</strong> 344 MW</p>
+    <div class="info-banner">
+        📋 <strong>About This Registry</strong><br><br>
+        This database catalogs hydroelectric generating facilities in the Upper Midwest region that underwent substantial upgrades, capacity additions, or new construction between 2019 and 2023. The registry includes run-of-river installations, reservoir-based generation, and pumped storage facilities with generating capacity ≥5 MW. Data is compiled from FERC licensing records, Army Corps of Engineers dam safety inspections, state water resources departments, and utility operator reports.<br><br>
+        <strong>Coverage Area:</strong> Minnesota, Wisconsin, Iowa, North Dakota, and South Dakota | <strong>Facility Count:</strong> 8 installations | <strong>Combined Capacity:</strong> 104 MW
     </div>
 
-    <!-- Quick navigation table -->
-    <table class="quick-links">
-        <tr>
-            <td>🏠 Home</td>
-            <td>🌊 Hydroelectric</td>
-            <td>💨 Wind Power</td>
-            <td>☀️ Solar Energy</td>
-            <td>📊 Analytics Dashboard</td>
-            <td>📥 Data Export</td>
-            <td>📧 Contact Us</td>
-        </tr>
-    </table>
-
-    <div class="statistics-grid">
-        <div class="stat-card">
-            <h4>Total Facilities</h4>
-            <div class="value">8</div>
-            <div class="description">Active installations</div>
-        </div>
-        <div class="stat-card">
-            <h4>Combined Capacity</h4>
-            <div class="value">344</div>
-            <div class="description">Megawatts (MW)</div>
-        </div>
-        <div class="stat-card">
-            <h4>Average Output</h4>
-            <div class="value">43</div>
-            <div class="description">MW per facility</div>
-        </div>
-        <div class="stat-card">
-            <h4>Capacity Factor</h4>
-            <div class="value">62%</div>
-            <div class="description">Regional average</div>
-        </div>
+    <div class="nav-bar">
+        <a href="#" class="nav-link">🏠 Home</a>
+        <a href="#" class="nav-link">🌊 Hydroelectric</a>
+        <a href="#" class="nav-link">💨 Wind Power</a>
+        <a href="#" class="nav-link">☀️ Solar Energy</a>
+        <a href="#" class="nav-link">📊 Analytics Dashboard</a>
+        <a href="#" class="nav-link">📥 Data Export</a>
+        <a href="#" class="nav-link">📧 Contact Us</a>
     </div>
 
-    <div class="content-section">
-        <h2 class="section-heading">📈 Project Classification & Distribution</h2>
-
-        <!-- Project types table - NOT the facility details -->
-        <table class="type-breakdown">
-            <thead>
-                <tr>
-                    <th>Project Type</th>
-                    <th>Count</th>
-                    <th>Total Capacity</th>
-                    <th>Percentage</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Run-of-River</strong></td>
-                    <td>5</td>
-                    <td>211 MW</td>
-                    <td>61.3%</td>
-                </tr>
-                <tr>
-                    <td><strong>Reservoir-Based</strong></td>
-                    <td>2</td>
-                    <td>97 MW</td>
-                    <td>28.2%</td>
-                </tr>
-                <tr>
-                    <td><strong>Lock & Dam</strong></td>
-                    <td>1</td>
-                    <td>36 MW</td>
-                    <td>10.5%</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p style="text-align: center; font-size: 13px; color: #666; margin-top: 20px;">
-            <em>Note: Pumped storage facilities are tracked in a separate registry due to their unique operational characteristics.</em>
-        </p>
-    </div>
-
-    <div class="content-section">
-        <h2 class="section-heading">🌊 Major River Systems Representation</h2>
-
-        <!-- River systems table - also NOT the detailed facility data -->
-        <table class="river-systems">
-            <thead>
-                <tr>
-                    <th>River System</th>
-                    <th>Watershed</th>
-                    <th>Facilities</th>
-                    <th>Total Output (MW)</th>
-                    <th>Primary State(s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Mississippi River</strong></td>
-                    <td>Upper Mississippi Basin</td>
-                    <td>5</td>
-                    <td>210 MW</td>
-                    <td>MN, WI, IA</td>
-                </tr>
-                <tr>
-                    <td><strong>St. Croix River</strong></td>
-                    <td>Upper Mississippi Tributary</td>
-                    <td>1</td>
-                    <td>39 MW</td>
-                    <td>WI/MN Border</td>
-                </tr>
-                <tr>
-                    <td><strong>Minnesota River</strong></td>
-                    <td>Upper Mississippi Tributary</td>
-                    <td>1</td>
-                    <td>52 MW</td>
-                    <td>Minnesota</td>
-                </tr>
-                <tr>
-                    <td><strong>Des Moines River</strong></td>
-                    <td>Upper Mississippi Tributary</td>
-                    <td>1</td>
-                    <td>43 MW</td>
-                    <td>Iowa</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="content-section">
-        <h2 class="section-heading">🗂️ Complete Facility Registry - Operational Data</h2>
-
-        <div class="notice-box">
-            <strong>⚠️ Data Usage Guidelines:</strong> The following registry represents facilities with upgraded or newly installed generating equipment between 2019-2023. "Upgrade" refers to turbine modernization, generator replacement, or capacity expansion projects that resulted in measurable capacity improvements. Original construction dates for historic dams may predate these entries by decades. Capacity figures reflect post-upgrade nameplate ratings.
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">TOTAL FACILITIES</div>
+                <div class="stat-value">8</div>
+                <div class="stat-unit">Active installations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">COMBINED CAPACITY</div>
+                <div class="stat-value">104</div>
+                <div class="stat-unit">Megawatts (MW)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">AVERAGE OUTPUT</div>
+                <div class="stat-value">13</div>
+                <div class="stat-unit">MW per facility</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">CAPACITY FACTOR</div>
+                <div class="stat-value">52%</div>
+                <div class="stat-unit">Regional average</div>
+            </div>
         </div>
 
-        <p style="font-size: 13px; color: #555; margin-bottom: 20px;">
+        <div class="table-container">
+            <h2>📊 Project Classification & Distribution</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Type</th>
+                        <th>Count</th>
+                        <th>Total Capacity</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Run-of-River</td>
+                        <td>5</td>
+                        <td>67 MW</td>
+                        <td>64.4%</td>
+                    </tr>
+                    <tr>
+                        <td>Reservoir-Based</td>
+                        <td>2</td>
+                        <td>28 MW</td>
+                        <td>26.9%</td>
+                    </tr>
+                    <tr>
+                        <td>Lock & Dam</td>
+                        <td>1</td>
+                        <td>9 MW</td>
+                        <td>8.7%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="table-note" style="margin-top: 12px;">Note: Pumped storage facilities are tracked in a separate registry due to their unique operational characteristics.</p>
+        </div>
+
+        <div class="watershed-table">
+            <h3>🌊 Facilities by River System</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>River System</th>
+                        <th>Watershed</th>
+                        <th>Facilities</th>
+                        <th>Total Output (MW)</th>
+                        <th>Primary State(s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mississippi River</td>
+                        <td>Upper Mississippi Basin</td>
+                        <td>3</td>
+                        <td>34 MW</td>
+                        <td>MN, WI</td>
+                    </tr>
+                    <tr>
+                        <td>St. Croix River</td>
+                        <td>Upper Mississippi Tributary</td>
+                        <td>1</td>
+                        <td>13 MW</td>
+                        <td>MN</td>
+                    </tr>
+                    <tr>
+                        <td>Red River</td>
+                        <td>Hudson Bay Watershed</td>
+                        <td>1</td>
+                        <td>13 MW</td>
+                        <td>ND</td>
+                    </tr>
+                    <tr>
+                        <td>Missouri River</td>
+                        <td>Missouri River Basin</td>
+                        <td>2</td>
+                        <td>38 MW</td>
+                        <td>SD, ND</td>
+                    </tr>
+                    <tr>
+                        <td>Wisconsin River</td>
+                        <td>Upper Mississippi Tributary</td>
+                        <td>1</td>
+                        <td>15 MW</td>
+                        <td>WI</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend-box">
             <strong>Table Legend:</strong> Facility names reflect official FERC license designations. Coordinates indicate approximate powerhouse location. Project types: ROR (Run-of-River), RES (Reservoir), L&D (Lock & Dam). All capacity values in megawatts (MW).
-        </p>
+        </div>
 
-        <!-- THIS IS THE MAIN TABLE STUDENTS SHOULD SCRAPE -->
-        <table class="hydro-registry" id="hydroelectric-facilities-master">
-            <thead>
-                <tr>
-                    <th>Facility Name</th>
-                    <th>Project Type</th>
-                    <th>Generation Capacity</th>
-                    <th>Location</th>
-                    <th>Coordinates</th>
-                    <th>Upgrade/Operational</th>
-                    <th>Operating Entity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Mississippi River Hydro Station</td>
-                    <td>Run-of-River</td>
-                    <td>45 MW</td>
-                    <td>Minneapolis, Minnesota</td>
-                    <td>44.9778°N, -93.2650°W</td>
-                    <td>Upgraded 2019</td>
-                    <td>Xcel Energy</td>
-                </tr>
-                <tr>
-                    <td>St. Croix Falls Hydroelectric</td>
-                    <td>Reservoir</td>
-                    <td>38.5 megawatts</td>
-                    <td>St. Croix Falls, WI</td>
-                    <td>45.4102, -92.6410</td>
-                    <td>2020</td>
-                    <td>Northern States Power</td>
-                </tr>
-                <tr>
-                    <td>Red Wing Dam Project</td>
-                    <td>Run-of-River</td>
-                    <td>52MW</td>
-                    <td>Red Wing, Minnesota</td>
-                    <td>44.5625, -92.5338</td>
-                    <td>Operational 2021</td>
-                    <td>Xcel Energy</td>
-                </tr>
-                <tr>
-                    <td>Winona Hydroelectric Plant</td>
-                    <td>ROR</td>
-                    <td>35 megawatts</td>
-                    <td>Winona, MN</td>
-                    <td>44.0499°N, -91.6393°W</td>
-                    <td>2019-11-01</td>
-                    <td>Dairyland Power Cooperative</td>
-                </tr>
-                <tr>
-                    <td>Alma Dam Facility</td>
-                    <td>Run-of-River</td>
-                    <td>42.5 MW</td>
-                    <td>Alma, Wisconsin</td>
-                    <td>44.3275, -91.9187</td>
-                    <td>2022</td>
-                    <td>Dairyland Power Cooperative</td>
-                </tr>
-                <tr>
-                    <td>Prairie du Chien Hydro</td>
-                    <td>Reservoir-Based</td>
-                    <td>48MW</td>
-                    <td>Prairie du Chien, WI</td>
-                    <td>43.0516, -91.1413</td>
-                    <td>Operational since 2020</td>
-                    <td>Alliant Energy</td>
-                </tr>
-                <tr>
-                    <td>Dubuque Lock & Dam Hydro</td>
-                    <td>Lock & Dam</td>
-                    <td>31.5 megawatts</td>
-                    <td>Dubuque, Iowa</td>
-                    <td>42.5006, -90.6648</td>
-                    <td>2021</td>
-                    <td>MidAmerican Energy</td>
-                </tr>
-                <tr>
-                    <td>Keokuk Dam Upgrade</td>
-                    <td>Run-of-River</td>
-                    <td>  55 MW  </td>
-                    <td>Keokuk, IA</td>
-                    <td>40.3974°N, -91.3876°W</td>
-                    <td>March 2023</td>
-                    <td>Ameren</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <h2>📋 Hydroelectric Facilities Detailed Registry</h2>
+            <table class="hydro-registry" id="hydro-facilities-list">
+                <thead>
+                    <tr>
+                        <th>Facility Name</th>
+                        <th>Project Type</th>
+                        <th>Generation Capacity</th>
+                        <th>Location</th>
+                        <th>Coordinates</th>
+                        <th>Upgrade/Operational</th>
+                        <th>Operating Entity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Red River Hydro Plant</td>
+                        <td>Run-of-River</td>
+                        <td>12.5 MW</td>
+                        <td>Grand Forks, ND</td>
+                        <td>47.9253, -97.0329</td>
+                        <td>Operational since 2009</td>
+                        <td>Northern States Power</td>
+                    </tr>
+                    <tr>
+                        <td>Big Sioux Hydro</td>
+                        <td>HYDRO</td>
+                        <td>8.2 MW</td>
+                        <td>Sioux Falls, South Dakota</td>
+                        <td>43.5446°N, -96.7311°W</td>
+                        <td>Operational since 2013</td>
+                        <td>Sioux Valley Energy</td>
+                    </tr>
+                    <tr>
+                        <td>Missouri River Hydro</td>
+                        <td>Hydroelectric</td>
+                        <td>18.7MW</td>
+                        <td>Yankton, SD</td>
+                        <td>42.8711, -97.3973</td>
+                        <td>January 2016</td>
+                        <td>NorthWestern Energy</td>
+                    </tr>
+                    <tr>
+                        <td>James River Hydro</td>
+                        <td>Small Hydro</td>
+                        <td>6.8MW</td>
+                        <td>Jamestown, North Dakota</td>
+                        <td>46.9105°N, -98.7084°W</td>
+                        <td>Operational since 2018</td>
+                        <td>Otter Tail Power</td>
+                    </tr>
+                    <tr>
+                        <td>North Fork Hydro</td>
+                        <td>HYDRO</td>
+                        <td>  14.5 MW  </td>
+                        <td>Eau Claire, Wisconsin</td>
+                        <td>44.8113°N, -91.4985°W</td>
+                        <td>Operational since 2019</td>
+                        <td>Dairyland Power</td>
+                    </tr>
+                    <tr>
+                        <td>Vermillion River Hydro</td>
+                        <td>Hydroelectric Dam</td>
+                        <td>9.2 MW</td>
+                        <td>Hastings, MN</td>
+                        <td>44.7433°N, -92.8521°W</td>
+                        <td>Operational since 2021</td>
+                        <td>Xcel Energy</td>
+                    </tr>
+                    <tr>
+                        <td>La Crosse Hydro Expansion</td>
+                        <td>HYDRO</td>
+                        <td>  22.8 MW  </td>
+                        <td>La Crosse, Wisconsin</td>
+                        <td>43.8014°N, -91.2396°W</td>
+                        <td>Operational since 2022</td>
+                        <td>Dairyland Power</td>
+                    </tr>
+                    <tr>
+                        <td>Cannon Falls Hydro</td>
+                        <td>Run-of-River</td>
+                        <td>  11.3 megawatts  </td>
+                        <td>Cannon Falls, Minnesota</td>
+                        <td>44.5069°N, -92.9054°W</td>
+                        <td>Operational since 2023</td>
+                        <td>Great River Energy</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <div class="data-notes">
-            <h4>📝 Technical Notes & Clarifications</h4>
+        <div class="tech-notes">
+            <h3>📝 Technical Notes & Clarifications</h3>
             <ul>
                 <li><strong>Generation Capacity:</strong> Nameplate capacity represents maximum instantaneous electrical output under optimal flow conditions. Actual generation varies seasonally based on river flow, reservoir levels, and operational constraints.</li>
                 <li><strong>Project Types Explained:</strong>
@@ -525,63 +549,64 @@
             </ul>
         </div>
 
-        <h3 style="color: #1a5490; margin-top: 35px; margin-bottom: 15px;">📚 Terminology Reference</h3>
-        
-        <table class="glossary-table">
-            <thead>
-                <tr>
-                    <th style="width: 25%;">Term</th>
-                    <th>Definition</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Nameplate Capacity</strong></td>
-                    <td>Maximum rated electrical output in megawatts under optimal conditions</td>
-                </tr>
-                <tr>
-                    <td><strong>Capacity Factor</strong></td>
-                    <td>Ratio of actual annual generation to potential generation if facility operated at nameplate capacity 24/7</td>
-                </tr>
-                <tr>
-                    <td><strong>Head</strong></td>
-                    <td>Vertical distance water falls through turbines; determines energy potential</td>
-                </tr>
-                <tr>
-                    <td><strong>Hydraulic Turbine</strong></td>
-                    <td>Rotating machine that converts water flow energy into mechanical shaft power</td>
-                </tr>
-                <tr>
-                    <td><strong>Penstock</strong></td>
-                    <td>Large pipe or channel that conveys water from reservoir to turbine</td>
-                </tr>
-                <tr>
-                    <td><strong>FERC License</strong></td>
-                    <td>Federal authorization required to construct and operate hydropower projects on navigable waters</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="definitions">
+            <h3>📚 Terminology Reference</h3>
+            <table class="def-table">
+                <tbody>
+                    <tr>
+                        <td>Nameplate Capacity</td>
+                        <td>Maximum rated electrical output in megawatts under optimal conditions</td>
+                    </tr>
+                    <tr>
+                        <td>Capacity Factor</td>
+                        <td>Ratio of actual annual generation to potential generation if facility operated at nameplate capacity 24/7</td>
+                    </tr>
+                    <tr>
+                        <td>Head</td>
+                        <td>Vertical distance water falls through turbines; determines energy potential</td>
+                    </tr>
+                    <tr>
+                        <td>Hydraulic Turbine</td>
+                        <td>Rotating machine that converts water flow energy into mechanical shaft power</td>
+                    </tr>
+                    <tr>
+                        <td>Penstock</td>
+                        <td>Large pipe or channel that conveys water from reservoir to turbine</td>
+                    </tr>
+                    <tr>
+                        <td>FERC License</td>
+                        <td>Federal authorization required to construct and operate hydropower projects on navigable waters</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="resources">
+            <h3>🔗 Additional Resources</h3>
+            <a href="#" class="resource-link">📄 FERC Licensing Database</a>
+            <a href="#" class="resource-link">🗺️ National Hydropower Map</a>
+            <a href="#" class="resource-link">📊 Generation Statistics</a>
+            <a href="#" class="resource-link">📧 Submit Update Request</a>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+            <p style="font-size: 14px; margin-bottom: 10px;"><strong>Database Maintained By:</strong> EPA Office of Atmospheric Programs, Hydroelectric Resources Division</p>
+            <p style="font-size: 14px; margin-bottom: 10px;"><strong>Last Updated:</strong> December 22, 2023 | <strong>Version:</strong> 5.0.3 | <strong>Update Frequency:</strong> Quarterly</p>
+            <p style="font-size: 14px; color: #607d8b;"><strong>Questions or data corrections?</strong> Email: <a href="mailto:hydro.registry@epa.gov" style="color: #0277bd;">hydro.registry@epa.gov</a> | Phone: 1-866-EPA-HYDRO</p>
+        </div>
+
+        <div class="disclaimer">
+            <strong>⚠️ EDUCATIONAL USE NOTICE</strong>
+            This webpage and all data contained herein are simulated and fictional, created for educational purposes as part of APEC 8221: Programming for Econometrics coursework at the University of Minnesota. While designed to be realistic in structure and format, the facilities, locations, capacity values, ownership information, and other details are not real and should not be used for any purpose other than learning web scraping and data analysis techniques. No actual EPA database, hydroelectric facility records, or government information is represented here. This is a teaching tool only.
+        </div>
     </div>
 
-    <div style="margin-top: 40px; padding: 25px; background-color: #f0f8ff; border-radius: 8px; font-size: 12px; color: #555; text-align: center;">
-        <p><strong>Additional Resources:</strong></p>
-        <p style="margin: 10px 0;">
-            <a href="#" style="color: #1a5490; text-decoration: none; margin: 0 15px;">📄 FERC Licensing Database</a> |
-            <a href="#" style="color: #1a5490; text-decoration: none; margin: 0 15px;">🗺️ National Hydropower Map</a> |
-            <a href="#" style="color: #1a5490; text-decoration: none; margin: 0 15px;">📊 Generation Statistics</a> |
-            <a href="#" style="color: #1a5490; text-decoration: none; margin: 0 15px;">📧 Submit Update Request</a>
-        </p>
-        <p style="margin-top: 15px; font-size: 11px;">
-            <strong>Database Maintained By:</strong> EPA Office of Atmospheric Programs, Hydroelectric Resources Division<br>
-            <strong>Last Updated:</strong> December 22, 2023 | <strong>Version:</strong> 5.0.3 | <strong>Update Frequency:</strong> Quarterly<br>
-            <em>Questions or data corrections? Email: hydro.registry@epa.gov | Phone: 1-866-EPA-HYDRO</em>
-        </p>
+    <div class="footer">
+        <div class="footer-content">
+            <p><strong>United States Environmental Protection Agency</strong></p>
+            <p>Office of Atmospheric Programs | Hydroelectric Resources Division</p>
+            <p style="margin-top: 12px;">Disclaimer: This is a simulated database for educational purposes only.</p>
+        </div>
     </div>
-
-    <hr style="margin: 45px 0; border: none; border-top: 4px double #ccc;">
-    <div style="background-color: #fff3cd; padding: 25px; border-left: 6px solid #ffc107; font-size: 14px; line-height: 1.9; border-radius: 6px;">
-        <strong>⚠️ EDUCATIONAL USE NOTICE:</strong> This webpage and all data contained herein are <strong>simulated and fictional</strong>, created by Claude AI (Anthropic) for educational purposes as part of APEC 8221: Programming for Econometrics coursework at the University of Minnesota. While designed to be realistic in structure, format, and technical terminology, the hydroelectric facilities, locations, capacity values, river systems, project types, ownership information, and other details are <strong>not real</strong> and should not be used for any purpose other than learning web scraping and data analysis techniques. No actual EPA database, FERC records, hydroelectric facility information, or government data is represented here. This is purely a teaching tool for programming instruction.
-    </div>
-
 </body>
 </html>
